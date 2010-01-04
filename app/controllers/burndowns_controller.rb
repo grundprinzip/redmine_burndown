@@ -12,6 +12,10 @@ private
   def find_version_and_project
     @project = Project.find(params[:project_id])
     @version = params[:id] ? @project.versions.find(params[:id]) : @project.current_version
+
+    unless @version and @project.versions.size > 0
+        @version = @project.versions.first
+    end
     render_error(l(:burndown_text_no_sprint)) and return unless @version
   end
 end
